@@ -30,6 +30,7 @@ export default {
   methods:{
       tableCont(index){
           this.countIndex = index
+          this.$emit('tabclick',index)
       }
   }
 };

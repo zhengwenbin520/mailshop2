@@ -1,5 +1,5 @@
 <template>
-  <div class="home-contro">
+  <div class="tab-control">
     <div
       v-for="(item, index) in titles"
       class="home-contro-title"
@@ -37,7 +37,7 @@ export default {
 </script>
 
 <style scoped>
-.home-contro {
+.tab-control{
   display: flex;
   text-align: center;
   height: 40px;

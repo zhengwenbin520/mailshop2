@@ -42,7 +42,7 @@ export default {
     }
     if (this.pullUpLoad) {
       this.scroll.on('pullingUp',()=>{
-        console.log('直接拉到底部')
+        //console.log('直接拉到底部')
         this.$emit('pullingUp')
       })
     }
@@ -58,6 +58,9 @@ export default {
     refresh() {
       console.log(11111);
       this.scroll && this.scroll.refresh();
+    },
+    finishPullUp(){
+      this.scroll && this.scroll.finishPullUp()
     }
   }
 };

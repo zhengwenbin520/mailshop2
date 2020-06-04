@@ -5,11 +5,11 @@
       <div slot="center">购物街</div>
     </nav-bar>
     </div>
-    <scroll class="content" ref="scr" :probe-type="3" @scroll="conentScroll" :pull-up-load="true">
+    <scroll class="content" ref="scr" :probe-type="3" @scroll="conentScroll" :pull-up-load="true" @pullingUp="leckend">
      <home-swiper :banners="banners"/>
      <recommend-view :recommend="recommend" /> 
      <feature-view />
-     <table-contro class="table-con" :titles="titles" @tabclick="tabclick" />
+     <table-contro :titles="titles" @tabclick="tabclick" ref="tableContro" />
      <goods-list :goods="showHome" />
     </scroll>
     <back-top @click.native="backClick" v-show="isShow"/>
@@ -23,7 +23,7 @@ import RecommendView from './childComps/RecommendView'
 import FeatureView from './childComps/FeatureView'
 
 import NavBar from "components/common/navbar/NavBar";
-import TableContro from 'components/content/tableContro/TableContro'
+import tableContro from 'components/content/tableContro/TableContro'
 import GoodsList from 'components/content/goods/GoodsList'
 import Scroll from 'components/common/scroll/Scroll'
 import BackTop from 'components/content/backTop/BackTop'
@@ -40,7 +40,7 @@ export default {
     HomeSwiper,
     RecommendView,
     FeatureView,
-    TableContro,
+    tableContro,
     GoodsList,
     Scroll,
     BackTop
@@ -66,6 +66,9 @@ export default {
     this.getHomeGoogs('sell');
 
     const refresh = debounce(this.$refs.scr.refresh,50)
+
+
+    console.log(this.$refs.tableContro)
 
     this.$bus.$on('itemImageLoad',()=>{
       //console.log('--------------------')
@@ -104,7 +107,11 @@ export default {
     conentScroll(position){
       //console.log(position)
      this.isShow = (-position.y) > 1000
+    },
 
+    leckend(){
+      //console.log(11)
+      this.getHomeGoogs(this.currentType)
     },
 
    /*
@@ -121,7 +128,9 @@ export default {
       getHomeGoogs(type,page).then(res => {
         this.goods[type].list.push(...res.data.list)
         this.goods[type].page +=1;
-       
+
+       // 完成上拉加载更多
+       this.$refs.scr.finishPullUp()
     })
     }
   }
@@ -142,11 +151,6 @@ export default {
   left: 0;
   right: 0;
   top: 0;
-  z-index: 9;
-}
-.table-con{
-  position: sticky;
-  top:44px;
   z-index: 9;
 }
 .content{

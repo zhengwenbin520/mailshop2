@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper" ref="query">
+  <div class="wra" ref="query">
     <div class="content">
       <slot></slot>
     </div>
@@ -61,6 +61,9 @@ export default {
     },
     finishPullUp(){
       this.scroll && this.scroll.finishPullUp()
+    },
+    getY(){
+      return this.scroll ? this.scroll.y : 0
     }
   }
 };
